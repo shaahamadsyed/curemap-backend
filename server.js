@@ -1,0 +1,31 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+
+dotenv.config();
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+require("./config/db")();
+
+const { register, login } = require("./controllers/authController");
+const { getDashboard } = require("./controllers/dashboardController");
+const { getResult } = require("./controllers/resultController");
+const auth = require("./middleware/authMiddleware");
+
+const Doctor = require("./models/Doctor");
+app.post("/register", register);
+app.post("/login", login);
+
+app.get("/dashboard", auth, getDashboard);
+
+app.post("/result", auth, getResult);
+
+app.get("/", (req, res) => {
+    res.send("CureMap Backend Running...");
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
