@@ -6,8 +6,14 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+  origin: "https://curemao-ui.vercel.app",
+  credentials: true
+}));
+
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
 require("./config/db")();
 
 const { register, login } = require("./controllers/authController");
