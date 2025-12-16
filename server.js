@@ -7,9 +7,14 @@ dotenv.config();
 
 const app = express();
 
+// app.use(cors({
+//   origin: "https://curemap-ui.vercel.app",
+//   credentials: true
+// }));
 app.use(cors({
-  origin: "https://curemao-ui.vercel.app",
-  credentials: true
+  origin: "https://curemap-ui.vercel.app",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
